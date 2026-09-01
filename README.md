@@ -1,63 +1,96 @@
-# GenAI RAG Chatbot with Conversational Memory
+# GenAI RAG & Hybrid RAG Projects
 
-A **Retrieval-Augmented Generation (RAG) chatbot** built using **LangChain, ChromaDB, Hugging Face Embeddings, and Gemini Flash**. The system retrieves relevant document context, maintains conversation history, and generates structured responses.
+A collection of **production-oriented Retrieval-Augmented Generation (RAG) projects** built with LangChain, Gemini, vector databases, Hugging Face embeddings, retrieval evaluation, reranking, and conversational memory.
 
-## 🚀 Key Features
+## 🚀 Projects
 
-* 📄 **Document ingestion:** PDF and WebBase loaders
-* 🔍 **Vector Database:** ChromaDB
-* 🧠 **Embeddings:** Hugging Face Embeddings
-* 🤖 **LLM:** Gemini Flash (`ChatGoogleGenerativeAI`)
-* 📌 **Structured Output:** `with_structured_output()`
-* 💬 **Conversational RAG:** Chat-history-aware retriever
-* 🧾 **History Management:** Custom `get_session_history()` function
-* 🔗 **Document Chain:** `create_stuff_documents_chain()`
-* 📊 **Retrieval Evaluation:** Recall@2, Precision@2, MRR
-* 🎯 **Generation Evaluation:** Tested generated responses for quality
-* 🧪 **Evaluation Result:** Recall@2 = **1.0**, Precision@2 = **1.0**, MRR = **1.0**
+### 1. Conversational RAG Chatbot
 
-## 🏗️ Architecture
+RAG chatbot with **ChromaDB and conversational memory** for context-aware question answering.
+
+**Tech Stack / Features**
+
+* PDF + WebBase document loaders
+* Hugging Face Embeddings
+* ChromaDB Vector Store
+* Chat-history-aware Retriever
+* `create_stuff_documents_chain()`
+* `with_structured_output()`
+* Custom `get_session_history()`
+* Gemini Flash (`ChatGoogleGenerativeAI`)
+* Retrieval + Generation Evaluation
+
+**Retrieval Evaluation**
+
+| Metric      |   Score |
+| ----------- | ------: |
+| Recall@2    | **1.0** |
+| Precision@2 | **1.0** |
+| MRR         | **1.0** |
+
+---
+
+### 2. Hybrid RAG with Reranking
+
+Hybrid RAG system combining **semantic and keyword search**, followed by **Cross-Encoder reranking** to improve retrieval relevance.
+
+**Tech Stack / Features**
+
+* Pinecone Vector Database
+* Hugging Face Embeddings
+* BM25 Retriever
+* Hybrid Search
+* Cross-Encoder Reranker
+* `with_structured_output()`
+* `Refine` Chain
+* Gemini Flash (`ChatGoogleGenerativeAI`)
+
+## 🏗️ Architectures
+
+### Conversational RAG
 
 ```text
-PDF / Web Documents
-        ↓
-Document Loaders
-        ↓
-Text Splitting
-        ↓
-Hugging Face Embeddings
-        ↓
-ChromaDB Vector Store
-        ↓
-Chat-History-Aware Retriever
-        ↓
-Relevant Documents
-        ↓
-Create Stuff Documents Chain
-        ↓
-Gemini Flash
-        ↓
-Structured Response
-        ↓
-Conversation History
+Documents → Embeddings → ChromaDB
+                         ↓
+              History-Aware Retriever
+                         ↓
+                  Document Chain
+                         ↓
+                    Gemini Flash
+                         ↓
+              Structured Response
 ```
 
-## 📊 Evaluation
+### Hybrid RAG
 
-| Metric                |    Score |
-| --------------------- | -------: |
-| Recall@2              |  **1.0** |
-| Precision@2           |  **1.0** |
-| MRR                   |  **1.0** |
-| Generation Evaluation | ✅ Passed |
+```text
+Query
+  ↓
+ ┌───────────────┐
+ │ Semantic Search│ → Pinecone
+ │ Keyword Search │ → BM25
+ └───────────────┘
+          ↓
+    Hybrid Retrieval
+          ↓
+  Cross-Encoder Reranker
+          ↓
+      Refine Chain
+          ↓
+      Gemini Flash
+          ↓
+ Structured Response
+```
 
 ## 🛠️ Tech Stack
 
-**Python · LangChain · Gemini Flash · ChromaDB · Hugging Face · RAG · PyPDF · WebBaseLoader**
+**Python · LangChain · Gemini Flash · ChromaDB · Pinecone · Hugging Face · BM25 · Cross-Encoder · RAG · Hybrid Search · Reranking**
 
-## 🎯 Outcome
+## 🎯 Key Outcomes
 
-The chatbot successfully **retrieves relevant context, maintains conversation history, remembers previous context, and generates evaluated responses**.
-
-ython app.py
-```
+* Built both **standard RAG and Hybrid RAG** pipelines.
+* Implemented **conversational memory and context-aware retrieval**.
+* Improved retrieval using **BM25 + semantic search + Cross-Encoder reranking**.
+* Evaluated retrieval using **Recall@K, Precision@K and MRR**.
+* Implemented structured generation and generation evaluation.
+* Implemented **structured generation and generation evaluation**.
